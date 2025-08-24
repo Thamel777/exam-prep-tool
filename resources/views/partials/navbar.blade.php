@@ -1,10 +1,12 @@
 <header class="navbar">
   <div class="wrapper">
-    <div class="logo">Save My Exam</div>
+    <div class="logo">
+      <a href="{{ route('home') }}" style="text-decoration:none;color:inherit;">Save My Exam</a>
+    </div>
 
     <nav class="nav-right">
       <ul>
-        <li><a href="{{ url('/') }}">Home</a></li>
+        <li><a href="{{ route('home') }}">Home</a></li>
 
         <li class="dropdown">
           <a href="#">Past Papers</a>
