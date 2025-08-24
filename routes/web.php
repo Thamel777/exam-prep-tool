@@ -9,6 +9,10 @@ Route::view('/', 'pages.home')->name('home');
 Route::view('/ol-papers', 'pages.ol-papers')->name('ol.papers');
 Route::view('/al-papers', 'pages.al-papers')->name('al.papers');
 
+// Quiz pages
+Route::view('/ol-quiz', 'pages.ol-quiz')->name('ol.quiz');
+Route::view('/al-quiz', 'pages.al-quiz')->name('al.quiz');
+
 Route::view('/exam-timetable', 'pages.timetable')->name('exam.timetable');
 Route::view('/lecturer-panel', 'pages.lecturers')->name('lecturer.panel');
 Route::view('/checklist', 'pages.checklist')->name('checklist');

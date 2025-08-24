@@ -16,8 +16,8 @@
             <li><a href="{{ url('/ol-papers') }}">O/L Papers</a></li>
             <li><a href="{{ url('/al-papers') }}">A/L Papers</a></li>
             <li><strong>MCQ Quiz</strong></li>
-            <li><a href="{{ url('/ol-quiz') }}">O/L Quiz</a></li>
-            <li><a href="{{ url('/al-quiz') }}">A/L Quiz</a></li>
+            <li><a href="{{ route('ol.quiz') }}">O/L Quiz</a></li>
+            <li><a href="{{ route('al.quiz') }}">A/L Quiz</a></li>
           </ul>
         </li>
 
