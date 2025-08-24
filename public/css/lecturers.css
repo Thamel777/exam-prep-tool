@@ -1,0 +1,60 @@
+/* === Lecture Panel page === */
+
+:root { --hero-img: url("/images/Talkpal-learning-illustration140-1024x574.webp"); }
+
+.wrapper, .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+/* Banner / Hero */
+.banner {
+  background: var(--hero-img) center/cover no-repeat;
+  min-height: 230px;
+  display: grid; place-items: center;
+  position: relative;
+}
+.banner .overlay {
+  background: rgba(0,0,0,0.45);
+  width: 100%;
+  height: 100%;
+  display: grid; place-items: center;
+}
+.banner h1 {
+  color: #fff; font-size: 40px; font-weight: 800; text-align: center;
+  text-shadow: 1px 1px 8px rgba(0,0,0,.6);
+  margin: 0;
+}
+
+/* Grid */
+.lecture-panel { background: #f9f9f9; padding: 44px 0; }
+.lecturers-grid {
+  display: grid; gap: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+/* Cards */
+.lecturer-card {
+  background: #fff; border-radius: 14px;
+  overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,.08);
+  transition: transform .18s ease, box-shadow .18s ease;
+  border: 2px solid transparent;
+}
+.lecturer-card.highlight { border-color: #2f6fff; }
+
+.lecturer-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.12);
+}
+
+.lecturer-card img {
+  width: 100%; height: 270px; object-fit: cover; display: block;
+}
+
+.lecturer-card .info {
+  padding: 14px 16px; text-align: center;
+}
+
+.lecturer-card h3 {
+  margin: 6px 0 4px; color: #b30000; font-weight: 800; font-size: 20px;
+}
+.lecturer-card p {
+  margin: 0; color: #222; line-height: 1.5;
+}

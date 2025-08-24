@@ -15,8 +15,8 @@ Route::view('/al-quiz', 'pages.al-quiz')->name('al.quiz');
 
 // Timetable and other pages
 Route::view('/exam-timetable', 'pages.timetable')->name('exam.timetable');
-
 Route::view('/lecturer-panel', 'pages.lecturers')->name('lecturer.panel');
+
 Route::view('/checklist', 'pages.checklist')->name('checklist');
 Route::view('/timeline', 'pages.timeline')->name('timeline');
 Route::get('/dashboard', function () {
