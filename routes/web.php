@@ -5,9 +5,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'pages.home')->name('home');
 
-Route::view('/ol-papers', 'pages.ol')->name('ol.papers');
-Route::view('/al-papers', 'pages.al')->name('al.papers');
+// Past paper pages
+Route::view('/ol-papers', 'pages.ol-papers')->name('ol.papers');
+Route::view('/al-papers', 'pages.al-papers')->name('al.papers');
+
+// Quiz pages
+Route::view('/ol-quiz', 'pages.ol-quiz')->name('ol.quiz');
+Route::view('/al-quiz', 'pages.al-quiz')->name('al.quiz');
+
+// Timetable and other pages
 Route::view('/exam-timetable', 'pages.timetable')->name('exam.timetable');
+
 Route::view('/lecturer-panel', 'pages.lecturers')->name('lecturer.panel');
 Route::view('/checklist', 'pages.checklist')->name('checklist');
 Route::view('/timeline', 'pages.timeline')->name('timeline');
