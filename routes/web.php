@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 
 Route::view('/', 'pages.home')->name('home');
 
@@ -27,6 +29,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Admin routes
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        if (! auth()->user()->is_admin) {
+            return redirect()->route('home')->with('notice', 'Admins only.');
+        }
+        return app(AdminDashboardController::class)->index();
+    })->name('dashboard');
 });
 
 require __DIR__.'/auth.php';
