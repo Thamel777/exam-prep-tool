@@ -43,8 +43,10 @@ Route::get('/lecturer/{slug}', [LecturerController::class, 'show'])
 
 // Meeting routes
 Route::middleware('auth')->group(function () {
+    Route::get('/timeline', [MeetingController::class, 'index'])->name('timeline');
     Route::get('/meetings/request', [MeetingController::class, 'create'])->name('meetings.create');
     Route::post('/meetings', [MeetingController::class, 'store'])->name('meetings.store');
+    Route::post('/meetings/{meeting}/cancel', [MeetingController::class, 'cancel'])->name('meetings.cancel');
 });
 
 
