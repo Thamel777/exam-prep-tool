@@ -49,19 +49,23 @@
         @endguest
 
         @auth
-          <li class="dropdown">
-            <a href="#">{{ auth()->user()->name ?? auth()->user()->email }}</a>
-            <ul class="dropdown-content">
-            <li><a href="{{ route('profile.edit') }}">Profile</a></li>
-            <li>
-                <form action="{{ route('logout') }}" method="POST" style="display:inline;">
-                @csrf
-                <button type="submit" class="link-like">Logout</button>
-                </form>
+            @if(auth()->user()->is_admin)
+                <li><a href="{{ route('admin.dashboard') }}">Admin</a></li>
+            @endif
+
+            <li class="dropdown">
+                <a href="#">{{ auth()->user()->name ?? auth()->user()->email }}</a>
+                <ul class="dropdown-content">
+                <li><a href="{{ route('profile.edit') }}">Profile</a></li>
+                <li>
+                    <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                    @csrf
+                    <button type="submit" class="link-like">Logout</button>
+                    </form>
+                </li>
+                </ul>
             </li>
-            </ul>
-        </li>
-        @endauth
+            @endauth
       </ul>
     </nav>
   </div>
