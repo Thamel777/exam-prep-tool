@@ -31,7 +31,7 @@
         <li class="dropdown">
           <a href="#">About Us</a>
           <ul class="dropdown-content">
-            <li><a href="{{ url('/lecturer-panel') }}">Lecturer Panel</a></li>
+            <li><a href="{{ route('lecturer.panel') }}">Lecturer Panel</a></li>
           </ul>
         </li>
 

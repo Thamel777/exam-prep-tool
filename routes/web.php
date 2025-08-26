@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 
 Route::view('/', 'pages.home')->name('home');
@@ -41,6 +42,13 @@ Route::prefix('lecturer')->name('lecturer.')->group(function () {
     Route::view('/sandamali-ekanayake', 'pages.lecturers.sandamali-ekanayake')->name('sandamali');
 });
 
+// Panel (list)
+Route::get('/lecturer-panel', [LecturerController::class, 'index'])
+    ->name('lecturer.panel');
+
+// Profile (dynamic)
+Route::get('/lecturer/{slug}', [LecturerController::class, 'show'])
+    ->name('lecturer.show');
 
 // Admin routes
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
