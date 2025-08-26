@@ -20,7 +20,7 @@
 
         {{-- Lecturer 1 --}}
         <div class="lecturer-card highlight">
-          <a href="#">
+          <a href="{{ route('lecturer.rimas') }}">
             <img src="{{ asset('images/689e5b2971577d707becb97405ede951.jpg') }}" alt="Rimas Essa">
           </a>
           <div class="info">
@@ -31,7 +31,7 @@
 
         {{-- Lecturer 2 --}}
         <div class="lecturer-card highlight">
-          <a href="#">
+          <a href="{{ route('lecturer.sahla') }}">
             <img src="{{ asset('images/4489ba241c9d7e0c1da1978d2e7f9d55.jpg') }}" alt="Sahla Mansoor">
           </a>
           <div class="info">
@@ -42,7 +42,7 @@
 
         {{-- Lecturer 3 --}}
         <div class="lecturer-card highlight">
-          <a href="#">
+          <a href="{{ route('lecturer.shakeel') }}">
             <img src="{{ asset('images/1efa6eb23b8179f35f1920fcf47ca2b9.jpg') }}" alt="Shakeel Laleel">
           </a>
           <div class="info">
@@ -53,7 +53,7 @@
 
         {{-- Lecturer 4 --}}
         <div class="lecturer-card highlight">
-          <a href="#">
+          <a href="{{ route('lecturer.michelle') }}">
             <img src="{{ asset('images/2345f10bb948c5665ef91f6773b3e455.jpg') }}" alt="Michelle Thomasz">
           </a>
           <div class="info">
@@ -64,7 +64,7 @@
 
         {{-- Lecturer 5 --}}
         <div class="lecturer-card highlight">
-          <a href="#">
+          <a href="{{ route('lecturer.sameer') }}">
             <img src="{{ asset('images/d524813536b71639999ba12bdb3621a8.jpg') }}" alt="Sameer Anis">
           </a>
           <div class="info">
@@ -75,7 +75,7 @@
 
         {{-- Lecturer 6 --}}
         <div class="lecturer-card highlight">
-          <a href="#">
+          <a href="{{ route('lecturer.sandamali') }}">
             <img src="{{ asset('images/bf9b9eff4d46d7eb96b60cb09c0cc7e3.jpg') }}" alt="Sandamali Ekanayake">
           </a>
           <div class="info">

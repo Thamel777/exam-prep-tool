@@ -31,6 +31,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Lecturer profiles
+Route::prefix('lecturer')->name('lecturer.')->group(function () {
+    Route::view('/rimas-essa', 'pages.lecturers.rimas-essa')->name('rimas');
+    Route::view('/sahla-mansoor', 'pages.lecturers.sahla-mansoor')->name('sahla');
+    Route::view('/shakeel-laleel', 'pages.lecturers.shakeel-laleel')->name('shakeel');
+    Route::view('/michelle-thomasz', 'pages.lecturers.michelle-thomasz')->name('michelle');
+    Route::view('/sameer-anis', 'pages.lecturers.sameer-anis')->name('sameer');
+    Route::view('/sandamali-ekanayake', 'pages.lecturers.sandamali-ekanayake')->name('sandamali');
+});
+
+
 // Admin routes
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/', function () {
