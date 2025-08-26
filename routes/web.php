@@ -6,6 +6,7 @@ use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\MeetingApprovalController;
 
 Route::view('/', 'pages.home')->name('home');
 
@@ -54,10 +55,25 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/', function () {
         if (! auth()->user()->is_admin) {
-            return redirect()->route('home')->with('notice', 'Admins only.');
+            return redirect()->route('home'); // silent bounce
         }
         return app(AdminDashboardController::class)->index();
     })->name('dashboard');
+
+    Route::get('/meetings', function () {
+        if (! auth()->user()->is_admin) return redirect()->route('home');
+        return app(MeetingApprovalController::class)->index(request());
+    })->name('meetings.index');
+
+    Route::post('/meetings/{meeting}/approve', function (\App\Models\Meeting $meeting) {
+        if (! auth()->user()->is_admin) return redirect()->route('home');
+        return app(MeetingApprovalController::class)->approve($meeting);
+    })->name('meetings.approve');
+
+    Route::post('/meetings/{meeting}/reject', function (\Illuminate\Http\Request $request, \App\Models\Meeting $meeting) {
+        if (! auth()->user()->is_admin) return redirect()->route('home');
+        return app(MeetingApprovalController::class)->reject($request, $meeting);
+    })->name('meetings.reject');
 });
 
 require __DIR__.'/auth.php';
