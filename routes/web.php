@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
@@ -32,16 +33,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Lecturer profiles
-Route::prefix('lecturer')->name('lecturer.')->group(function () {
-    Route::view('/rimas-essa', 'pages.lecturers.rimas-essa')->name('rimas');
-    Route::view('/sahla-mansoor', 'pages.lecturers.sahla-mansoor')->name('sahla');
-    Route::view('/shakeel-laleel', 'pages.lecturers.shakeel-laleel')->name('shakeel');
-    Route::view('/michelle-thomasz', 'pages.lecturers.michelle-thomasz')->name('michelle');
-    Route::view('/sameer-anis', 'pages.lecturers.sameer-anis')->name('sameer');
-    Route::view('/sandamali-ekanayake', 'pages.lecturers.sandamali-ekanayake')->name('sandamali');
-});
-
 // Panel (list)
 Route::get('/lecturer-panel', [LecturerController::class, 'index'])
     ->name('lecturer.panel');
@@ -49,6 +40,13 @@ Route::get('/lecturer-panel', [LecturerController::class, 'index'])
 // Profile (dynamic)
 Route::get('/lecturer/{slug}', [LecturerController::class, 'show'])
     ->name('lecturer.show');
+
+// Meeting routes
+Route::middleware('auth')->group(function () {
+    Route::get('/meetings/request', [MeetingController::class, 'create'])->name('meetings.create');
+    Route::post('/meetings', [MeetingController::class, 'store'])->name('meetings.store');
+});
+
 
 // Admin routes
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {

@@ -19,7 +19,7 @@
               <img src="{{ asset('images/'.$lect->photo_path) }}" alt="{{ $lect->name }}">
             </a>
             <div class="info">
-              <h3>{{ $lect->name }}</h3>
+              <h3><a href="{{ route('lecturer.show', $lect->slug) }}">{{ $lect->name }}</a></h3>
               <p>
                 @if($lect->title) {{ $lect->title }}<br> @endif
                 @if($lect->subject) {{ $lect->subject }}<br> @endif
