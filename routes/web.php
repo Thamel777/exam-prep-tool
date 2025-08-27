@@ -1,9 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\MeetingApprovalController;
 
 Route::view('/', 'pages.home')->name('home');
 
@@ -31,14 +34,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Lecturer profiles
-Route::prefix('lecturer')->name('lecturer.')->group(function () {
-    Route::view('/rimas-essa', 'pages.lecturers.rimas-essa')->name('rimas');
-    Route::view('/sahla-mansoor', 'pages.lecturers.sahla-mansoor')->name('sahla');
-    Route::view('/shakeel-laleel', 'pages.lecturers.shakeel-laleel')->name('shakeel');
-    Route::view('/michelle-thomasz', 'pages.lecturers.michelle-thomasz')->name('michelle');
-    Route::view('/sameer-anis', 'pages.lecturers.sameer-anis')->name('sameer');
-    Route::view('/sandamali-ekanayake', 'pages.lecturers.sandamali-ekanayake')->name('sandamali');
+// Panel (list)
+Route::get('/lecturer-panel', [LecturerController::class, 'index'])
+    ->name('lecturer.panel');
+
+// Profile (dynamic)
+Route::get('/lecturer/{slug}', [LecturerController::class, 'show'])
+    ->name('lecturer.show');
+
+// Meeting routes
+Route::middleware('auth')->group(function () {
+    Route::get('/timeline', [MeetingController::class, 'index'])->name('timeline');
+    Route::get('/meetings/request', [MeetingController::class, 'create'])->name('meetings.create');
+    Route::post('/meetings', [MeetingController::class, 'store'])->name('meetings.store');
+    Route::post('/meetings/{meeting}/cancel', [MeetingController::class, 'cancel'])->name('meetings.cancel');
 });
 
 
@@ -46,10 +55,25 @@ Route::prefix('lecturer')->name('lecturer.')->group(function () {
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/', function () {
         if (! auth()->user()->is_admin) {
-            return redirect()->route('home')->with('notice', 'Admins only.');
+            return redirect()->route('home'); // silent bounce
         }
         return app(AdminDashboardController::class)->index();
     })->name('dashboard');
+
+    Route::get('/meetings', function () {
+        if (! auth()->user()->is_admin) return redirect()->route('home');
+        return app(MeetingApprovalController::class)->index(request());
+    })->name('meetings.index');
+
+    Route::post('/meetings/{meeting}/approve', function (\App\Models\Meeting $meeting) {
+        if (! auth()->user()->is_admin) return redirect()->route('home');
+        return app(MeetingApprovalController::class)->approve($meeting);
+    })->name('meetings.approve');
+
+    Route::post('/meetings/{meeting}/reject', function (\Illuminate\Http\Request $request, \App\Models\Meeting $meeting) {
+        if (! auth()->user()->is_admin) return redirect()->route('home');
+        return app(MeetingApprovalController::class)->reject($request, $meeting);
+    })->name('meetings.reject');
 });
 
 require __DIR__.'/auth.php';
