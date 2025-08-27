@@ -1,73 +1,166 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Save My Exam – Laravel Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-# Save My Exam (Laravel Project)
-
-A Laravel-based web platform for accessing **O/L and A/L past papers, exam resources, timetables, and quizzes**.  
-Originally migrated from a static HTML project into a structured Laravel application with authentication.
+A Laravel 12 application for managing **O/L and A/L past papers**, quizzes, lecturers, exam timetables, and more.  
+Admins can upload PDF past papers via the dashboard, and users can browse and download them.
 
 ---
 
-## ✨ Features
-- **Homepage** with hero section and quick links.
-- **Top header + Navigation bar + Footer** shared across all pages.
-- **Auth system** (Login / Register) with Laravel Breeze.
-- Role support: `admin` and `user`.
-- Static resources for:
-  - O/L & A/L Past Papers
-  - MCQ Quizzes
-  - Exam Timetables
-  - Lecturer Panel
-  - Checklists & Timelines
-
----
-
-## 🛠️ Tech Stack
-- [Laravel 11](https://laravel.com/)
-- PHP 8.2+
-- MySQL / MariaDB
-- Tailwind CSS (via Laravel Breeze)
-- Blade Templates
-- [Spatie Laravel Permission](https://spatie.be/docs/laravel-permission) (role management)
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
+## 🚀 Requirements
 - PHP >= 8.2
-- Composer >= 2.5
-- Node.js >= 18 & npm >= 9
-- MySQL or MariaDB
+- Composer
+- Node.js & npm
+- MySQL (or MariaDB)
+- Git
 
-### Installation
+---
+
+## ⚙️ Installation
+
+### 1. Clone the repository
 ```bash
-# Clone repo
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone <your-repo-url>.git
+cd <your-project-folder>
+```
 
-# Install PHP dependencies
+### 2. Install dependencies
+```bash
 composer install
-
-# Install JS dependencies
 npm install
+```
 
-# Copy environment file
-cp .env.example .env
+### 3. Environment setup
+Copy `.env.example` into `.env`:
+```bash
+cp .env.example .env   # Linux/Mac
+copy .env.example .env # Windows
+```
 
-# Generate app key
+Update `.env` with your local settings:
+```dotenv
+APP_URL=http://127.0.0.1:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=save_my_exam
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 4. Generate app key
+```bash
 php artisan key:generate
+```
 
-# Configure DB in .env then run migrations
+### 5. Run migrations and seeders
+This will create the schema and seed **subjects** (O/L & A/L) with their images.
+
+```bash
 php artisan migrate --seed
+```
 
-# Start dev server
+If you want to re-seed subjects later:
+```bash
+php artisan db:seed --class=SubjectSeeder
+```
+
+### 6. Storage symlink (for PDFs/images)
+```bash
+php artisan storage:link
+```
+
+### 7. Build assets
+```bash
+npm run dev     # for development
+npm run build   # for production
+```
+
+### 8. Start the app
+```bash
 php artisan serve
-npm run dev
+```
 
+Visit:
+- `http://127.0.0.1:8000/ol-papers`
+- `http://127.0.0.1:8000/al-papers`
+- `http://127.0.0.1:8000/admin/papers` (admin only)
+
+---
+
+## 👤 User & Admin Setup
+
+### Create a test user
+```bash
+php artisan tinker
+>>> \App\Models\User::create([
+...   'name' => 'Test User',
+...   'email' => 'test@example.com',
+...   'password' => bcrypt('Password@123'),
+...   'email_verified_at' => now(),
+... ]);
+```
+
+### Promote a user to admin
+```bash
+php artisan tinker
+>>> $u = \App\Models\User::where('email','test@example.com')->first();
+>>> $u->is_admin = true;
+>>> $u->save();
+```
+
+Now this user can access `/admin/papers`.
+
+### Reset password (if needed)
+```bash
+php artisan tinker
+>>> $u = \App\Models\User::where('email','test@example.com')->first();
+>>> $u->password = bcrypt('NewPassword@123');
+>>> $u->save();
+```
+
+---
+
+## 📂 Project Highlights
+
+- **Subjects** are seeded with O/L and A/L categories and hero images.
+- **Past Papers** can be uploaded by admin (PDF files stored in `storage/app/public/papers/...`).
+- **Users** can browse by subject and download past papers.
+- **Admin Dashboard** has sidebar navigation for managing papers and more features in the future.
+
+---
+
+## 🔧 Useful Commands
+
+Clear caches:
+```bash
+php artisan optimize:clear
+```
+
+Check available routes:
+```bash
+php artisan route:list
+```
+
+Inspect subjects:
+```bash
+php artisan tinker
+>>> \App\Models\Subject::pluck('slug','name');
+```
+
+Inspect papers:
+```bash
+php artisan tinker
+>>> \App\Models\PastPaper::with('subject')->get(['id','title','year','subject_id']);
+```
+
+---
+
+## ✅ Next Steps
+
+- Add more admin dashboard modules (quizzes, lecturers, etc.).
+- Add analytics for downloads.
+- Add custom artisan command `php artisan user:make-admin <email>` for easier admin setup.
+
+---
+
+Happy coding! 🎉
