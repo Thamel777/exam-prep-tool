@@ -5,14 +5,31 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LecturerController;
+use App\Http\Controllers\Admin\PaperController;
+use App\Http\Controllers\PaperBrowseController;
+use App\Http\Controllers\PaperDownloadController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\MeetingApprovalController;
 
 Route::view('/', 'pages.home')->name('home');
 
-// Past paper pages
-Route::view('/ol-papers', 'pages.ol-papers')->name('ol.papers');
-Route::view('/al-papers', 'pages.al-papers')->name('al.papers');
+// Public past-paper browsing
+Route::get('/ol-papers', [PaperBrowseController::class,'subjects'])
+    ->defaults('level','OL')->name('ol.papers');
+
+Route::get('/al-papers', [PaperBrowseController::class,'subjects'])
+    ->defaults('level','AL')->name('al.papers');
+
+Route::get('/ol-papers/{subject:slug}', [PaperBrowseController::class,'list'])
+    ->defaults('level','OL')->name('ol.papers.list');
+
+Route::get('/al-papers/{subject:slug}', [PaperBrowseController::class,'list'])
+    ->defaults('level','AL')->name('al.papers.list');
+
+// Paper download (with access control)
+Route::get('/papers/{paper}/download', [PaperDownloadController::class,'download'])
+    ->name('papers.download');
+
 
 // Quiz pages
 Route::view('/ol-quiz', 'pages.ol-quiz')->name('ol.quiz');
@@ -72,6 +89,13 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         if (! auth()->user()->is_admin) return redirect()->route('home');
         return app(MeetingApprovalController::class)->reject($request, $meeting);
     })->name('meetings.reject');
+
+    Route::get('/papers',           [PaperController::class, 'index'])->name('papers.index');
+    Route::get('/papers/create',    [PaperController::class, 'create'])->name('papers.create');
+    Route::post('/papers',          [PaperController::class, 'store'])->name('papers.store');
+    Route::get('/papers/{paper}/edit', [PaperController::class, 'edit'])->name('papers.edit');
+    Route::put('/papers/{paper}',   [PaperController::class, 'update'])->name('papers.update');
+    Route::delete('/papers/{paper}',[PaperController::class, 'destroy'])->name('papers.destroy');
 });
 
 require __DIR__.'/auth.php';

@@ -17,6 +17,11 @@
     <span>Rejected</span>
   </a>
 
+  <div class="menu-section">Past Papers</div>
+    <a class="menu-link" href="{{ route('admin.papers.index') }}">All Papers</a>
+    <a class="menu-link" href="{{ route('admin.papers.create') }}">Upload</a>
+
+
   {{-- Future sections add later --}}
   <div class="menu-section">Management</div>
   <a class="menu-link disabled"><span>Lecturers (soon)</span></a>
