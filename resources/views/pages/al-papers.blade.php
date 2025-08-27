@@ -13,7 +13,7 @@
   <section class="subjects wrapper">
     <div class="subject-card">
       <a href="#">
-        <img src="{{ asset('images/acc-course.jpg') }}" alt="Accounting">
+        <img src="{{ asset('images/subjects/acc-course.jpg') }}" alt="Accounting">
         <p>ACCOUNTING</p>
       </a>
     </div>
