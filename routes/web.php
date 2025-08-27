@@ -54,9 +54,7 @@ Route::middleware('auth')->group(function () {
 // Admin routes
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/', function () {
-        if (! auth()->user()->is_admin) {
-            return redirect()->route('home'); // silent bounce
-        }
+        if (! auth()->user()->is_admin) return redirect()->route('home');
         return app(AdminDashboardController::class)->index();
     })->name('dashboard');
 

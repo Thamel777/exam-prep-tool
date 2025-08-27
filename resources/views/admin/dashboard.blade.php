@@ -15,29 +15,27 @@
     <div class="card">
       <h3>Pending (Next 8)</h3>
       <table class="table">
-        <thead><tr>
-          <th>Student</th><th>Lecturer</th><th>When</th><th>Title</th><th>Actions</th>
-        </tr></thead>
+        <thead><tr><th>Student</th><th>Lecturer</th><th>When</th><th>Title</th><th>Actions</th></tr></thead>
         <tbody>
-        @forelse($latestPending as $m)
-          <tr>
-            <td>{{ $m->user->name }}</td>
-            <td>{{ $m->lecturer->name }}</td>
-            <td>{{ $m->scheduled_at?->format('M d, Y h:i A') }}</td>
-            <td>{{ $m->title }}</td>
-            <td class="actions">
-              <form method="POST" action="{{ route('admin.meetings.approve', $m) }}">@csrf
-                <button class="btn btn-primary">Approve</button>
-              </form>
-              <form method="POST" action="{{ route('admin.meetings.reject', $m) }}">@csrf
-                <input type="hidden" name="reason" value="Not available">
-                <button class="btn btn-outline">Reject</button>
-              </form>
-            </td>
-          </tr>
-        @empty
-          <tr><td colspan="5">No pending meetings.</td></tr>
-        @endforelse
+          @forelse($latestPending as $m)
+            <tr>
+              <td>{{ $m->user->name }}</td>
+              <td>{{ $m->lecturer->name }}</td>
+              <td>{{ $m->scheduled_at?->format('M d, Y h:i A') }}</td>
+              <td>{{ $m->title }}</td>
+              <td class="actions">
+                <form method="POST" action="{{ route('admin.meetings.approve', $m) }}">@csrf
+                  <button class="btn btn-primary">Approve</button>
+                </form>
+                <form method="POST" action="{{ route('admin.meetings.reject', $m) }}">@csrf
+                  <input type="hidden" name="reason" value="Not available">
+                  <button class="btn btn-outline">Reject</button>
+                </form>
+              </td>
+            </tr>
+          @empty
+            <tr><td colspan="5">No pending meetings.</td></tr>
+          @endforelse
         </tbody>
       </table>
     </div>
