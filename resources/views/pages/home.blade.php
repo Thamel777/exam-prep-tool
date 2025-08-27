@@ -7,8 +7,8 @@
   <h2>Welcome to Save My Exam</h2>
   <p>Find your O/L and A/L past papers, timetables, and exam resources – all in one place.</p>
   <div class="buttons">
-    <a href="{{ url('/ol-papers') }}" class="btn">Browse O/L Papers</a>
-    <a href="{{ url('/al-papers') }}" class="btn">Browse A/L Papers</a>
+    <a href="{{ route('ol.papers') }}" class="btn">Browse O/L Papers</a>
+    <a href="{{ route('al.papers') }}" class="btn">Browse A/L Papers</a>
   </div>
 </section>
 @endsection

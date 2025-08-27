@@ -1,0 +1,40 @@
+/* Exam Timetable Page styles */
+
+:root { --hero-img: url("/images/Talkpal-learning-illustration140-1024x574.webp"); }
+
+.wrapper { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+.hero {
+  background: var(--hero-img) center/cover no-repeat;
+  min-height: 250px;
+  display: grid; place-items: center;
+  color: #fff; text-align: center;
+  text-shadow: 1px 1px 5px rgba(0,0,0,.7);
+  padding: 24px 20px; font-size: 28px; font-weight: 700;
+}
+
+.timetable {
+  padding: 40px 20px;
+  background: #f9f9f9;
+}
+
+.timetable table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.timetable th, .timetable td {
+  padding: 14px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.timetable th {
+  background: #06113C;
+  color: #fff;
+  font-weight: 600;
+}
